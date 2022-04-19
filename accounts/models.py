@@ -2,6 +2,7 @@ from django.contrib.auth.hashers import make_password, identify_hasher
 from django.db.models import (EmailField, CharField, BooleanField,
                               ImageField, DateTimeField)
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.urls import reverse
 
 
 class UserManager(BaseUserManager):
@@ -53,6 +54,9 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+
+    def get_absolute_url(self):
+        return reverse('view_account', kwargs={'pk': self.pk})
 
     def get_short_name(self):
         if self.name:
